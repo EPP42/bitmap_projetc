@@ -1,0 +1,8 @@
+#### FIX 
+
+fix the bug with the sigsegv in the function create_buff
+#####
+handle color pic 
+
+### 
+start the filtre creation 

@@ -20,10 +20,10 @@ struct header
 	short number_color_plane;
 	short number_of_bit_pixel;
 	int compression_used;
-	int size_of_raw;
+	int size_of_image;
 	int resolution_horizontal;
 	int resolution_vertical;
-	int number_color_palette;
+	int number_color_palette;// 8 or 24 bits 
 	int importance_color; // 0 mens all means 
 	char red[3];
 	char white[3];
@@ -50,4 +50,7 @@ class Header
 	int get_width() const;
 	int get_height() const;
 	void load_header(std::FILE* stream);
+	void reload_header(std::FILE* stream); // output file 
+        int get_size() const;
+
 };

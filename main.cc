@@ -3,5 +3,6 @@
 
 int main()
 {
-	Image I("lena.bmp");
+	Image I("birds.bmp");
+	I.reload_image("new.bmp");
 }

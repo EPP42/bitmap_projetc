@@ -37,7 +37,7 @@ ImageC::~ImageC()
 
 void ImageC::create_matrice()
 {
-   pic_pix_ = new uint8_t*[header_.get_height() * ];
+   pic_pix_ = new uint8_t*[header_.get_height() * PIX];
     if (pic_pix_)
     {
         for (uint32_t i = 0; i < header_.get_height(); i++)

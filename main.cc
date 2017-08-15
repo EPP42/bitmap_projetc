@@ -1,8 +1,8 @@
 #include <iostream>
-#include "image.hh"
+#include "image_nb.hh"
 
 int main()
 {
-	Image I("birds.bmp");
-	I.reload_image("new.bmp");
+	ImageNB I("lena.bmp");
+    I.reload_image("remy.bmp");
 }

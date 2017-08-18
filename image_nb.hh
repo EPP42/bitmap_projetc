@@ -12,7 +12,7 @@ class ImageNB : public Image
 
         /* create the buffer that will contain the information between the 
          header part and the beginning of the picture */
-        virtual void create_buffer() override;
+        void create_buffer();
 
         /* load the image information in the header object and the pixel part in the buffer */
         virtual void load_image() override;
@@ -21,9 +21,15 @@ class ImageNB : public Image
         virtual void reload_image(std::string output_fname) override;
 
         /*load the buffer in the image file*/
-        virtual void reload_buffer() override; 
+        void reload_buffer(); 
 
         /*print the header of the image */
          virtual void copy_pix_matrice() override;
 
+         uint8_t **pic_pix_get() const;
+
+    protected :
+        
+        uint8_t *buffer_;
+        uint8_t **pic_pix_;
 };

@@ -87,17 +87,17 @@ void ImageNB::reload_image(std::string output_fname)
         std::streamsize size = 
         static_cast<std::size_t>(header_.get_offset_image()) - sizeof(header_s);
         header_.reload_header(ostream_);
-        // wird have to look for buffer value 
-        //ostream_.seekp(sizeof(header_s), std::ios_base::beg);
         ostream_.write(reinterpret_cast<char*>(buffer_),size);
-        //std::fseek(output_stream_, header_.get_offset_image(), SEEK_SET);
         copy_pix_matrice();
     }
     else 
         throw std::ios_base::failure("Fail to open the file");
 }
 
-
+uint8_t** ImageNB::pic_pix_get() const
+{
+    return pic_pix_;
+}
 
 void ImageNB::reload_buffer()
 {

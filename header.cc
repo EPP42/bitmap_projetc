@@ -87,5 +87,8 @@ void Header::load_header(std::ifstream& stream)
 }
 
 
-
+uint32_t Header::size_pix_get() const noexcept
+{
+    return header_.number_color_palette;
+}
 

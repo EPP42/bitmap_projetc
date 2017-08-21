@@ -82,4 +82,9 @@ class Header
 
     /*print the heaeder*/
     void print_header() const;
+
+    /* return the size of a pixel */
+
+    uint32_t size_pix_get() const noexcept;
+
 };

@@ -34,6 +34,8 @@ class Kmean
     public:
 
         void compute_distances(int x, int y);
+        void display_nb_center() const;
+        void display_colored_center() const;
 
     private :
        

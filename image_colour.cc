@@ -25,6 +25,12 @@ ImageC::ImageC(std::string picture_name)
     }
 }
 
+
+bool ImageC::is_24bit_pic() const
+{
+    return header_.size_pix_get() % 24 ? false : true; 
+}
+
 ImageC::~ImageC()
 {
     for (uint32_t i = 0; i < header_.get_height(); i++)

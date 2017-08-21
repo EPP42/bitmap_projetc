@@ -28,6 +28,9 @@ class ImageNB : public Image
 
          uint8_t **pic_pix_get() const;
 
+         /*return true if the function has an 8 bit format */
+        bool is_8bit_pic() const;
+
     protected :
         
         uint8_t *buffer_;

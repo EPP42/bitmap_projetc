@@ -29,6 +29,10 @@ class ImageC : public Image
 
          pix **pic_pix_get() const;
 
+         /* return true if the picture is an 24 bit picture */
+
+         bool is_24bit_pic() const;
+
     protected :
 
         pix **pic_pix_ = nullptr;

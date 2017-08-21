@@ -11,6 +11,10 @@ ImageNB::ImageNB(std::string picture_name)
         if (istream_)
         {
             header_.load_header(istream_);
+            if (!is_8bit_pic()) 
+            { 
+                throw std::logic_error("Bad format pic ") ;
+            }
             auto size = header_.get_offset_image() - sizeof(header_s);
             create_buffer();
             istream_.read(reinterpret_cast<char*>(buffer_), size);
@@ -24,6 +28,11 @@ ImageNB::ImageNB(std::string picture_name)
     {
         std::cout<<mssg.what();
     }
+}
+
+bool ImageNB::is_8bit_pic() const
+{
+    return header_.size_pix_get()  % 8 == 0 ? true : false;
 }
 
 ImageNB::~ImageNB()

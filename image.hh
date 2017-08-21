@@ -33,6 +33,8 @@ class Image
         /* return the height of the picture */
 
         uint32_t get_height() const noexcept;
+
+        /* return true if the picture is an 8 bit pic else false */
    protected:
  
         Header header_;

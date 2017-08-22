@@ -13,6 +13,7 @@ class ImageC : public Image
         using pix_info = struct pix_info;
 
         ImageC(std::string picture_name);
+
         virtual ~ImageC() override;
         
         /* create the matrix of (uint8_t ** matrix ) that will contain the pixels */
@@ -33,9 +34,10 @@ class ImageC : public Image
 
          bool is_24bit_pic() const;
 
+         operator bool() const;
+
     protected :
 
         pix **pic_pix_ = nullptr;
 };
 
-int operator * (struct pix& p, struct colored_center& c);

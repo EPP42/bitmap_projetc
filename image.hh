@@ -35,10 +35,17 @@ class Image
         uint32_t get_height() const noexcept;
 
         /* return true if the picture is an 8 bit pic else false */
+
+        /*return true no error occured else true*/
+
+        bool is_good() const;
+
+
    protected:
  
         Header header_;
         std::string name_;
         std::ifstream istream_;
         std::ofstream  ostream_;
+        bool state_ = true;
 };

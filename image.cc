@@ -22,3 +22,8 @@ uint32_t Image::get_height() const noexcept
 }
 
 
+bool Image::is_good() const
+{
+    return state_;
+}
+

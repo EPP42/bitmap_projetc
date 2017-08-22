@@ -6,13 +6,15 @@
 
 ImageC::ImageC(std::string picture_name)
 {
- try
+    try
     {
         istream_.open (picture_name, std::ifstream::binary | std::ifstream::in);
         if (istream_)
         {
             header_.load_header(istream_);
+            std::cout << "header load " << std::endl;
             istream_.seekg(header_.get_offset_image(), std::ios_base::beg);
+            std::cout << "seekg made "<< std::endl;
             create_matrice();
             load_image();
         }
@@ -22,25 +24,34 @@ ImageC::ImageC(std::string picture_name)
     catch (const std::exception& mssg)
     {
         std::cout<<mssg.what();
+        state_ = false;
     }
 }
 
 
+ImageC::operator bool() const
+{
+    return state_;
+}
+
 bool ImageC::is_24bit_pic() const
 {
-    return header_.size_pix_get() % 24 ? false : true; 
+    return header_.size_pix_get() != 24 ? false : true; 
 }
 
 ImageC::~ImageC()
 {
-    for (uint32_t i = 0; i < header_.get_height(); i++)
-        delete [] pic_pix_[i];
-    delete [] pic_pix_;
+    if (pic_pix_)
+    {
+        for (uint32_t i = 0; i < header_.get_height(); i++)
+            delete [] pic_pix_[i];
+        delete [] pic_pix_;
+    }
 }
 
 void ImageC::create_matrice()
 {
-   pic_pix_ = new pix*[header_.get_height()];
+    pic_pix_ = new pix*[header_.get_height()];
     if (pic_pix_)
     {
         for (uint32_t i = 0; i < header_.get_height(); i++)
@@ -48,24 +59,25 @@ void ImageC::create_matrice()
     }
     else 
         throw std::bad_alloc();
-  
+
 }
 
 void ImageC::load_image()
 {
+    std::cout << "In load image " << std::endl;
     long remains = 0;
     for (uint32_t i = 0; i < header_.get_height(); i++)
     {
         istream_.read(reinterpret_cast<char *>(pic_pix_[i]), 
-        header_.get_width() * PIX);
+                header_.get_width() * PIX);
         remains += istream_.gcount();
     }
-    #if defined(DEBUG_MODE)
-        assert(remains == header_.get_size());
-    #else
-        if (remains != header_.get_size())
-            throw std::length_error("error");
-    #endif
+#if defined(DEBUG_MODE)
+    assert(remains == header_.get_size());
+#else
+    if (remains != header_.get_size())
+        throw std::length_error("error");
+#endif
 }
 
 
@@ -73,19 +85,20 @@ void ImageC::copy_pix_matrice()
 {
     long remains = 0;
     for (uint32_t i = 0; i < header_.get_height(); i++)
-         ostream_.write(reinterpret_cast<char *>(pic_pix_[i]), header_.get_width() * PIX);
+        ostream_.write(reinterpret_cast<char *>(pic_pix_[i]), header_.get_width() * PIX);
     if (ostream_.fail() || ostream_.bad())
         throw std::ios_base::failure("error while writting");
-    #if defined(DEBUG_MODE)
-        assert(remains != header_.get_size());
-    #else
-        if (remains != header_.get_size() * PIX)
-            throw std::length_error("Uncomplete copy");
-    #endif
+#if defined(DEBUG_MODE)
+    assert(remains != header_.get_size());
+#else
+    if (remains != header_.get_size() * PIX)
+        throw std::length_error("Uncomplete copy");
+#endif
 }
 
 void ImageC::reload_image(std::string output_fname)
 {
+    std::cout << "In the reload function " << std::endl;
     ostream_.open(output_fname.c_str(), std::ofstream::out | std::ofstream::binary);
     if (ostream_)
     {
@@ -103,9 +116,4 @@ pix** ImageC::pic_pix_get() const
 }
 
 
-int operator * (struct pix& p, struct colored_center& c)
-{
-    return (c.pix_v.v - p.v) * (c.pix_v.v - p.v) +  
-    (c.pix_v.r - p.r) * (c.pix_v.r - p.r) +
-    (c.pix_v.b - p.b) * (c.pix_v.b - p.b);
-}
+

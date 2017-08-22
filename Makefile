@@ -2,7 +2,7 @@ CXX= g++
 CXXFLAGS= -std=c++14 -Wall -Werror -Wextra -pedantic -g3
 
 EXEC= reader
-SRC= header.cc main.cc image.cc image_nb.cc image_colour.cc k_means.cc
+SRC= header.cc main.cc image.cc image_nb.cc image_colour.cc k_means.cc bmplib.cc
 
 
 

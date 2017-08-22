@@ -31,8 +31,16 @@ class ImageNB : public Image
          /*return true if the function has an 8 bit format */
         bool is_8bit_pic() const;
 
+        /*state get*/
+
+        bool is_good() const;
+
+        /*convertion type to bool */
+
+        operator bool () const;
+
     protected :
         
-        uint8_t *buffer_;
-        uint8_t **pic_pix_;
+        uint8_t *buffer_ = nullptr;
+        uint8_t **pic_pix_ = nullptr;
 };

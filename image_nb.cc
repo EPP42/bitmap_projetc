@@ -27,20 +27,32 @@ ImageNB::ImageNB(std::string picture_name)
     catch (const std::exception& mssg)
     {
         std::cout<<mssg.what();
+        state_ = false;
     }
+}
+
+
+ImageNB::operator bool () const
+{
+    return state_;
 }
 
 bool ImageNB::is_8bit_pic() const
 {
-    return header_.size_pix_get()  % 8 == 0 ? true : false;
+    std::cout << "size pix get " << header_.size_pix_get() << std::endl;
+    return header_.size_pix_get() != 8 ? false : true;
 }
 
 ImageNB::~ImageNB()
 {
+    if (pic_pix_)
+    {
     for (uint32_t i = 0; i < header_.get_height(); i++)
         delete [] pic_pix_[i];
     delete [] pic_pix_;
-    delete [] buffer_;
+    }
+    if (buffer_)
+        delete [] buffer_;
 }
 
 void ImageNB::create_matrice()
@@ -114,12 +126,10 @@ void ImageNB::reload_buffer()
     sizeof(header_s));
 }
 
+
 void ImageNB::create_buffer() 
 {
     auto size = static_cast<std::size_t>(header_.get_offset_image()) - sizeof(header_s);
     buffer_ = new uint8_t[size];
 }
-
-
-
 

@@ -1,8 +1,16 @@
 #include <iostream>
-#include "image_nb.hh"
+#include "k_means.hh"
 
 int main()
 {
-	ImageNB I("lena.bmp");
-    I.reload_image("remy.bmp");
+
+    ImageC I("lena_colour.bmp");
+    if (I)
+    {
+        std::cout << "here";
+        Kmean cluster(100, 20);
+        cluster(I);
+        cluster.display_colored_center();
+        I.reload_image("out.bmp");
+    }
 }

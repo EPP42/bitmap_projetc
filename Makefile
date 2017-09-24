@@ -1,11 +1,13 @@
 CXX= g++
-CXXFLAGS= -std=c++14 -Wall -Werror -Wextra -pedantic -g3
+CXXFLAGS= -std=c++14 -Wall -Werror -Wextra -pedantic -g3 -I $(INCLUDE_DIR)
 
 EXEC= reader
-SRC= header.cc main.cc image.cc image_nb.cc image_colour.cc k_means.cc bmplib.cc
+SRC= $(wildcard ./src/*.cc)
+INCLUDE_DIR=include 
 
+VPATH= src
 
-
+INCLUDE_DIRECTORIES=include
 all_debug:  $(SRC)
 	$(CXX) $(CXXFLAGS) -DDEBUG_MODE $^ -o $@
 

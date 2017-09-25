@@ -13,7 +13,7 @@ INCLUDE_DIRECTORIES=include
 
 all: $(EXEC)
 
-all_debug:  $(SRC)
+all_debug:  $(SRC) main.cc
 	$(CXX) $(CXXFLAGS) -DDEBUG_MODE $^ -o $@
 
 src/%.o: src/%.cc
@@ -22,13 +22,16 @@ src/%.o: src/%.cc
 lib: $(LIB)
 
 $(LIB) : $(OBJ)
-	$(CXX) $(CXXFLAGS) -fPIC -shared  -DDEBUG_MODE $^ -o $@
+	$(CXX) $(CXXFLAGS) -fPIC -shared  $^ -o $@
 	$(RM) $(OBJ)
+ 
+reader_lib: $(LIB) main.cc
+	$(CXX) $(CXXFLAGS) -L. $(LIB)  $^ -o $@
 
-$(EXEC) : $(SRC)
+$(EXEC) : $(SRC) main.cc
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 clean: 
-	@$(RM) $(EXEC) $(LIB)
+	$(RM) $(EXEC) $(LIB)
 
 .PHONY: clean all 
